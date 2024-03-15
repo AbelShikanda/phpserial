@@ -26,13 +26,13 @@ Before running this project, ensure you have the following installed:
 1. Clone the repository to your local machine:
 
     ```bash
-    git clone https://
+    [git clone https://](https://github.com/AbelShikanda/phpserial.git)
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd laravel-arduino-project
+    cd phpserial
     ```
 
 3. Install PHP dependencies using Composer:
