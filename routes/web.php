@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccessLogsController;
 
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +19,8 @@ use App\Http\Controllers\AccessLogsController;
 |
 */
 
-Route::get('/admin', function () {
-    return view('admin.index');});
+Route::get('/admin_', function () {
+    return view('admin.admin.index');});
     // ->middleware('adminauth');
 
 
