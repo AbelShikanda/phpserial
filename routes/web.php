@@ -16,6 +16,20 @@ use App\Http\Controllers\AccessLogsController;
 |
 */
 
+Route::get('/admin', function () {
+    return view('admin.index');});
+    // ->middleware('adminauth');
+
+
+Route::group(['prefix' => '/admin'], function() {
+    Route::get('/login', [AdminAuthController::class, 'getLogin'])->name('getLogin');
+    Route::post('/login', [AdminAuthController::class, 'postLogin'])->name('postLogin');
+    Route::post('/logout', [AdminAuthController::class, 'adminLogout'])->name('adminLogout');
+    Route::resource('/dashboard', DashboardController::class);
+    // Route::resource('/dashboard', DashboardController::class)->middleware('adminauth');
+    // Route::get('/dashboard', [DashboardController::class, 'data'])->name('data');
+});
+
 Route::get('/', function () {
     return view('home');
 });
