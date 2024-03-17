@@ -97,7 +97,7 @@ img {
     border-radius: 50%;
     box-shadow: 0 0 22px #3336;
     transition: .6s;
-    margin-left: -2%;
+    margin-left: -3%;
 }
 
 .profile-card:hover img {

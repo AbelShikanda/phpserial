@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccessLogsController;
+use App\Http\Controllers\NotificationsController;
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -25,7 +26,7 @@ Route::get('/admin_', function () {
     // ->middleware('adminauth');
 
 
-Route::group(['prefix' => '/admin'], function() {
+Route::group(['prefix' => '/admin_'], function() {
     Route::get('/login', [AdminAuthController::class, 'getLogin'])->name('getLogin');
     Route::post('/login', [AdminAuthController::class, 'postLogin'])->name('postLogin');
     Route::post('/logout', [AdminAuthController::class, 'adminLogout'])->name('adminLogout');
@@ -34,8 +35,17 @@ Route::group(['prefix' => '/admin'], function() {
     // Route::get('/dashboard', [DashboardController::class, 'data'])->name('data');
 });
 
+Route::get('/show', [DashboardController::class, 'show'])->name('show');
+Route::get('/shows', [NotificationsController::class, 'shows'])->name('shows');
+Route::resource('/notifications', NotificationsController::class);
+
+// Route::group(['middleware' => 'adminauth'], function() {
+//     Route::resource('permissions', PermissionsController::class);
+//     Route::resource('roles', RolesController::class);
+// });
+
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 Auth::routes();

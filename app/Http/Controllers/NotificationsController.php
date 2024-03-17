@@ -14,7 +14,7 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.Notifications.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class NotificationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.Notifications.create');
     }
 
     /**
@@ -44,9 +44,10 @@ class NotificationsController extends Controller
      * @param  \App\Models\Notifications  $notifications
      * @return \Illuminate\Http\Response
      */
-    public function show(Notifications $notifications)
+    // public function show(Notifications $notifications)
+    public function shows()
     {
-        //
+        return view('admin.Notifications.show');
     }
 
     /**

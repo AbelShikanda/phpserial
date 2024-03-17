@@ -27,14 +27,37 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                    <a href="{{ route('dashboard.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
                             Clients
-                            <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
                 </li>
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon far fa-envelope"></i>
+                      <p>
+                        Mailbox
+                        <i class="fas fa-angle-left right"></i>
+                        <span class="right badge badge-danger">New</span>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="{{ route('notifications.index') }}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Inbox</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ route('notifications.create') }}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Compose</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                 <li class="nav-item py-4">
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
