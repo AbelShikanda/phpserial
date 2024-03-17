@@ -55,3 +55,4 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/logs', [AccessLogsController::class, 'index'])->name('logs');
+Route::post('/store', [AccessLogsController::class, 'store'])->name('store');

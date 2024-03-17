@@ -5,8 +5,8 @@
     <div>
         <div class="profile-card">
             <div class="img">
-                <img src="https://play-lh.googleusercontent.com/0nEi836Ec0mgHa6X_NgY4cKtAz0tug-hndFg0SuHwEAE4S6GlBTcEu7ynKyCcPLSMAo=w240-h480-rw" style="height:200px; width:200px"
-                    oncontextmenu="return false">
+                <img src="https://play-lh.googleusercontent.com/0nEi836Ec0mgHa6X_NgY4cKtAz0tug-hndFg0SuHwEAE4S6GlBTcEu7ynKyCcPLSMAo=w240-h480-rw"
+                    style="height:200px; width:200px" oncontextmenu="return false">
             </div>
             <div class="caption">
                 <br>
@@ -52,20 +52,42 @@
                     </div>
                 </nav>
                 <br>
-                <br>
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger col-md-12">
+                        <strong>Whoops!</strong>
+                            @foreach ($errors->all() as $error)
+                                <h6>{{ $error }}</h6>
+                            @endforeach
+                    </div>
+                @endif
+                <div class="p-0">
+                    @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                </div>
                 <br>
                 <div class="social-links">
                     @if (Route::has('login'))
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                             @auth
-                            <a href="{{ url('/home') }}" class="btn btn-rounded btn-success text-sm text-light-700 underline mx-">Lock</a>
-                            <a href="{{ url('/home') }}" class="btn btn-rounded btn-danger text-sm text-light-700 underline mx-">Unlock</a>
-                            <br>                            @else
-                            <a href="{{ route('login') }}" class="btn btn-rounded btn-success text-sm text-light-700 underline">Log in</a>
+                                <form method="POST" action="{{ route('store') }}">
+                                    @csrf
+                                    <input name="signal_id" type="submit"
+                                        class="btn btn-rounded btn-success text-sm text-light-700 underline mx-" value="Lock">
+                                    <input name="signal_id" type="submit"
+                                        class="btn btn-rounded btn-danger text-sm text-light-700 underline mx-" value="Unlock">
+                                </form>
+                                <br>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="btn btn-rounded btn-success text-sm text-light-700 underline">Log in</a>
 
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" target="">
-                                        <a href="{{ route('register') }}" class="btn btn-rounded btn-secondary ml-4 text-sm text-light-700 underline">Register</a>
+                                        <a href="{{ route('register') }}"
+                                            class="btn btn-rounded btn-secondary ml-4 text-sm text-light-700 underline">Register</a>
                                     </a>
                                 @endif
                             @endauth
@@ -73,7 +95,6 @@
                     @endif
                 </div>
                 <p>Countdown</p>
-
                 <hr>
             </div>
         </div>

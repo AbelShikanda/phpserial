@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div>
         <div class="profile-card-logs">
             <div class="img">
@@ -59,59 +58,30 @@
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
                         <table class="table table-bordered table-striped mb-0">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Action</th>
-                              <th scope="col">Time</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">4</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">5</th>
-                              <td>Jacob</td>
-                              <td>Thornton</td>
-                              <td>@fat</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">6</th>
-                              <td>Larry</td>
-                              <td>the Bird</td>
-                              <td>@twitter</td>
-                            </tr>
-                          </tbody>
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($logs as $log)
+                                    <tr>
+                                        <th scope="row">{{ $log->id }}</th>
+                                        <td>{{ $log->user->name }}</td>
+                                        <td>{{ $log->action }}</td>
+                                        <td>{{ $log->created_at }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
-                      
-                      </div>
+
+                    </div>
                 </div>
                 <hr>
             </div>
         </div>
     </div>
-
 @endsection
