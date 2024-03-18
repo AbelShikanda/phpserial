@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Models\Notifications;
@@ -10,7 +11,7 @@ use App\Models\AccessLogs;
 use App\Models\User;
 
 use DateTime;
-use DB;
+// use DB;
 
 class AccessLogsController extends Controller
 {

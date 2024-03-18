@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -9,7 +10,7 @@ use App\Models\Countdown;
 use App\Models\Notifications;
 use App\Models\User;
 
-use DB;
+// use DB;
 
 class DashboardController extends Controller
 {
