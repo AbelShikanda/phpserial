@@ -57,24 +57,24 @@ class AccessLogsController extends Controller
         $comando = $request->input('signal_id');
         $selectedDate = $request->input('date');
         
-        ////////////////////////////////////////
-        // if ($comando == 'Lock') {
-        //     $command = 'l';
-        // }elseif ($comando == 'Unlock') {
-        //     $command = 'd';
-        // }
-        ///////////////////////////////////////
-        // $fp = fopen('COM4', 'w+');
-        // if ($fp === false) {
-        //     die('Failed to open serial port.');
-        // }
-        // $bytes_written = fwrite($fp, $command);
-        // if ($bytes_written === false) {
-        //     fclose($fp);
-        //     die('Failed to write to serial port.');
-        // }
-        // fclose($fp);
-        ///////////////////////////////////////
+        //////////////////////////////////////
+        if ($comando == 'Lock') {
+            $command = 'l';
+        }elseif ($comando == 'Unlock') {
+            $command = 'd';
+        }
+        /////////////////////////////////////
+        $fp = fopen('COM4', 'w+');
+        if ($fp === false) {
+            die('Failed to open serial port.');
+        }
+        $bytes_written = fwrite($fp, $command);
+        if ($bytes_written === false) {
+            fclose($fp);
+            die('Failed to write to serial port.');
+        }
+        fclose($fp);
+        /////////////////////////////////////
         $comand = $request->validate([
             'signal_id' => 'required'
         ]);
