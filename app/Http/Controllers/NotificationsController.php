@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notifications;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
@@ -14,7 +16,17 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        return view('admin.Notifications.index');
+        $user = Auth::user();
+        $notify = Notifications::where('user_id', $user->id)
+            ->first()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $user_name = User::find($user->id)->name;
+        // dd($user_name);
+        return view('notifications')->with([
+            'notify' => $notify,
+            'user_name' => $user_name,
+        ]);
     }
 
     /**
@@ -45,9 +57,13 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     // public function show(Notifications $notifications)
-    public function shows()
+    public function show($id)
     {
-        return view('admin.Notifications.show');
+        $notify = Notifications::find($id);
+        // dd($notify);
+        return view('notifications_details')->with([
+            'notify' => $notify,
+        ]);
     }
 
     /**

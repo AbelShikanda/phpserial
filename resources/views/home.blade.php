@@ -36,6 +36,12 @@
                                         {{ __('Logs') }}
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('notifications.index') }}">
+                                        {{ __('Notifications' ) }}
+                                        <i class="far fa-comments"></i>
+                                        <span class="badge text-danger p-0">3</span>
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                                  document.getElementById('logout-form').submit();">
@@ -89,9 +95,11 @@
                                     </form>
                                 @else
                                     <input name="signal_id" type="submit"
-                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-" value="Lock" disabled>
+                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-"
+                                        value="Lock" disabled>
                                     <input name="signal_id" type="submit"
-                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-" value="Unlock" disabled>
+                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-"
+                                        value="Unlock" disabled>
                                 @endif
                             @else
                                 <a href="{{ route('login') }}"

@@ -67,19 +67,15 @@
                         <table class="table table-bordered table-striped mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Action</th>
-                                    <th scope="col">Time</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Message</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($logs as $log)
+                                @foreach ($notify as $not)
                                     <tr>
-                                        <th scope="row">{{ $log->id }}</th>
-                                        <td>{{ $log->user->name }}</td>
-                                        <td>{{ $log->action }}</td>
-                                        <td>{{ $log->created_at }}</td>
+                                        <td>{{ $not->subject }}</td>
+                                        <td><a href="{{ route('notifications.show', $not->id) }}">{{ $not->message }}</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

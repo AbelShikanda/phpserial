@@ -96,7 +96,7 @@ class AccessLogsController extends Controller
             $minute = $dateTime->format('i');
 
             // Check if the time is between midnight (00:00) and 6 AM (06:00)
-            if ($hour >= 12 && $hour < 18) {
+            if ($hour >= 00 && $hour < 06) {
                 Notifications::create([
                     'user_id' => $user->id,
                     'subject' => 'Alert',

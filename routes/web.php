@@ -32,18 +32,17 @@ Route::group(['prefix' => '/admin_'], function() {
     Route::resource('/dashboard', DashboardController::class)->middleware('adminauth');
 });
 
-Route::get('/shows', [NotificationsController::class, 'shows'])->name('shows');
-Route::resource('/notifications', NotificationsController::class);
+// Route::get('/shows', [NotificationsController::class, 'shows'])->name('shows');
 
 // Route::group(['middleware' => 'adminauth'], function() {
-//     Route::resource('permissions', PermissionsController::class);
-//     Route::resource('roles', RolesController::class);
-// });
-
+    //     Route::resource('permissions', PermissionsController::class);
+    //     Route::resource('roles', RolesController::class);
+    // });
+    
 Route::get('/', function () {
     return view('welcome');
 });
-
+    
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -51,3 +50,5 @@ Route::post('/update_timer_stop', [HomeController::class, 'stop'])->name('stop')
 
 Route::get('/logs', [AccessLogsController::class, 'index'])->name('logs');
 Route::post('/store', [AccessLogsController::class, 'store'])->name('store');
+
+Route::resource('/notifications', NotificationsController::class);

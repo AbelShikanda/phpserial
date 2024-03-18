@@ -64,26 +64,18 @@
                 <div class="social-links">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-                        <table class="table table-bordered table-striped mb-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Action</th>
-                                    <th scope="col">Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($logs as $log)
-                                    <tr>
-                                        <th scope="row">{{ $log->id }}</th>
-                                        <td>{{ $log->user->name }}</td>
-                                        <td>{{ $log->action }}</td>
-                                        <td>{{ $log->created_at }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="card">
+                            <div class="card-header">
+                                Inbox
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title p-4">{{ $notify->subject }}</h5>
+                                <p class="card-text">{{ $notify->message }}</p>
+                                <p>At exactly {{ $notify->created_at }}</p>
+                                <p>By {{ $notify->user->name }}</p>
+                                <a href="{{ route('notifications.index') }}" class="btn btn-primary">Back to notifications</a>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
