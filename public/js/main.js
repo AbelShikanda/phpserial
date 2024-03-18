@@ -4,6 +4,7 @@
 ///////////////////////////////////////////////////////////////
 //select the date from the admin section
 var countdownElement = document.getElementById("datecount").value;
+console.log("Countdown value:", countdownElement);
 // Set the date we're counting down to
 var countDownDate = new Date(countdownElement).getTime();
 // Update the count down every 1 second

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Countdown;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,18 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        foreach ($users as $user) {
-            // Fetch the latest countdown for the current user
-            $countdown = Countdown::where('user_id', $user->id)->latest()->first();
-            
-            // Attach the latest countdown value to the user model
-            $user->latestCountdown = $countdown;
-        }
+
+        $user = Auth::user();
+        $countdown = Countdown::where('user_id', $user->id)->latest()->first();
         // dd($countdown);
         return view('home')->with([
             'countdown' => $countdown,
         ]);
+
     }
 
     /**
