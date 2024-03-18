@@ -22,20 +22,17 @@ use App\Http\Controllers\Admin\DashboardController;
 */
 
 Route::get('/admin_', function () {
-    return view('admin.admin.index');});
-    // ->middleware('adminauth');
+    return view('admin.admin.index');})
+    ->middleware('adminauth');
 
 
 Route::group(['prefix' => '/admin_'], function() {
     Route::get('/login', [AdminAuthController::class, 'getLogin'])->name('getLogin');
     Route::post('/login', [AdminAuthController::class, 'postLogin'])->name('postLogin');
     Route::post('/logout', [AdminAuthController::class, 'adminLogout'])->name('adminLogout');
-    Route::resource('/dashboard', DashboardController::class);
-    // Route::resource('/dashboard', DashboardController::class)->middleware('adminauth');
-    // Route::get('/dashboard', [DashboardController::class, 'data'])->name('data');
+    Route::resource('/dashboard', DashboardController::class)->middleware('adminauth');
 });
 
-Route::get('/show', [DashboardController::class, 'show'])->name('show');
 Route::get('/shows', [NotificationsController::class, 'shows'])->name('shows');
 Route::resource('/notifications', NotificationsController::class);
 

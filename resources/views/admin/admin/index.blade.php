@@ -22,14 +22,16 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <h3 class="card-title">clients</h3></div>
-                    <div class="col-md-2">
-                      <a class="btn btn-secondary btn-sm" href="{{ route('dashboard.create') }}">
-                          Add client details
-                      </a></div>
-                  </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="card-title">clients</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-secondary btn-sm" href="{{ route('dashboard.create') }}">
+                                Add client details
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -57,35 +59,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    <a>
-                                        AdminLTE v3
-                                    </a>
-                                    <br />
-                                    <small>
-                                        Created 01.01.2019
-                                    </small>
-                                </td>
-                                <td class="project-state">
-                                    <span class="badge badge-success">Success</span>
-                                </td>
-                                <td class="project-actions text-right">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('show') }}">
-                                        <i class="fas fa-folder">
-                                        </i>
-                                        View
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" href="#">
-                                        <i class="fas fa-trash">
-                                        </i>
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>
+                                        {{ $user->id }}
+                                    </td>
+                                    <td>
+                                        <a>
+                                            {{ $user->name }}
+                                        </a>
+                                        <br />
+                                        <small>
+                                            {{ $user->created_at }}
+                                        </small>
+                                    </td>
+                                    <td class="project-state">
+                                        @if ($user->is_appr)
+                                            <span class="badge badge-success">Approved</span>
+                                        @else
+                                            <span class="badge badge-danger">Rejected</span>
+                                        @endif
+                                    </td>
+                                    <td class="project-actions text-right">
+                                        <a class="btn btn-primary btn-sm" href="{{ route('dashboard.show', $user->id) }}">
+                                            <i class="fas fa-folder">
+                                            </i>
+                                            View
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" href="#">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

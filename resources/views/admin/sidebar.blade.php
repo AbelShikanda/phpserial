@@ -34,7 +34,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
+                <li class="nav-item menu-close">
                     <a href="#" class="nav-link">
                       <i class="nav-icon far fa-envelope"></i>
                       <p>
@@ -59,14 +59,9 @@
                     </ul>
                   </li>
                 <li class="nav-item py-4">
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
+                    <form action="{{ route('adminLogout') }}" method="POST" class="">
+                        {{ csrf_field() }}
+                            <button type="submit" name="" class="nav-link">Logout</button>
                     </form>
                 </li>
             </ul>

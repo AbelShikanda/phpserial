@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\Controller;
+use App\Models\Countdown;
+use App\Models\User;
+
+use DB;
 
 class DashboardController extends Controller
 {
@@ -14,7 +19,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.admin.index');
+        $users = User::all();
+        return view('admin.admin.index')->with([
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -24,7 +32,10 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        return view('admin.admin.create');
+        $users = User::all();
+        return view('admin.admin.create')->with([
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -35,7 +46,43 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->input('name');
+        // dd($id);
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'date' => 'required',
+            'status' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            // Logic For Save User Data
+
+            $clt_details = Countdown::create([
+                'user_id' => $request->input('name'),
+                'price' => $request->input('price'),
+                'countdown' => $request->input('date'),
+            ]);
+
+            User::where('id', $id)->update([
+                'is_appr' => !empty($request->status) ? 1 : 0,
+            ]);
+
+            if(!$clt_details){
+                DB::rollBack();
+
+                return back()->with('error', 'Something went wrong while saving user data');
+            }
+
+            DB::commit();
+            return redirect()->route('dashboard.index')->with('success', 'User Stored Successfully.');
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -44,9 +91,15 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('admin.admin.show');
+        $user = User::find($id);
+        $countdown = Countdown::where('user_id', $id)->first();
+        // dd($countdown);
+        return view('admin.admin.show')->with([
+            'user' => $user,
+            'countdown' => $countdown,
+        ]);
     }
 
     /**

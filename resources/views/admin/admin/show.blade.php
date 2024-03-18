@@ -53,15 +53,22 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>1.</td>
-                                                        <td>Update software</td>
+                                                        <td>{{ $user->id }}</td>
                                                         <td>
-                                                            <div class="progress progress-xs">
-                                                                <div class="progress-bar progress-bar-danger"
-                                                                    style="width: 55%"></div>
-                                                            </div>
+                                                            @if ($countdown)
+                                                                {{ $countdown->countdown }}
+                                                            @endif
                                                         </td>
-                                                        <td><span class="badge bg-danger">55%</span></td>
+                                                        <td>
+                                                            <p id="demo"></p>
+                                                        </td>
+                                                        <td>
+                                                            @if ($user->is_appr)
+                                                                <span class="badge badge-success">Approved</span>
+                                                            @else
+                                                                <span class="badge badge-danger">Rejected</span>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>

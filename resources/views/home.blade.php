@@ -67,7 +67,6 @@
                         </div>
                     @endif
                 </div>
-                <br>
                 <div class="social-links">
                     @if (Route::has('login'))
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
@@ -79,7 +78,6 @@
                                     <input name="signal_id" type="submit"
                                         class="btn btn-rounded btn-danger text-sm text-light-700 underline mx-" value="Unlock">
                                 </form>
-                                <br>
                             @else
                                 <a href="{{ route('login') }}"
                                     class="btn btn-rounded btn-success text-sm text-light-700 underline">Log in</a>
@@ -94,7 +92,7 @@
                         </div>
                     @endif
                 </div>
-                <p>Countdown</p>
+                <p id="demo"></p>
                 <hr>
             </div>
         </div>

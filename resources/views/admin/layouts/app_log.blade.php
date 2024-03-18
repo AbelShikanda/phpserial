@@ -27,8 +27,6 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
-    <!-- Scripts -->
-    <script src="{{ asset('js/main.js') }}" defer></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -41,8 +39,6 @@
         </div>
 
         <main class="py-4">
-            @include('admin.header')
-            @include('admin.sidebar')
             @yield('content')
             @include('admin.footer')
         </main>
