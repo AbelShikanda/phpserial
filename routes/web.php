@@ -25,7 +25,6 @@ Route::get('/admin_', function () {
     return view('admin.admin.index');})
     ->middleware('adminauth');
 
-
 Route::group(['prefix' => '/admin_'], function() {
     Route::get('/login', [AdminAuthController::class, 'getLogin'])->name('getLogin');
     Route::post('/login', [AdminAuthController::class, 'postLogin'])->name('postLogin');
@@ -48,8 +47,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
+Route::post('/update_timer_stop', [HomeController::class, 'stop'])->name('stop');
 
 Route::get('/logs', [AccessLogsController::class, 'index'])->name('logs');
 Route::post('/store', [AccessLogsController::class, 'store'])->name('store');

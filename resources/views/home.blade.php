@@ -55,9 +55,9 @@
                 @if (count($errors) > 0)
                     <div class="alert alert-danger col-md-12">
                         <strong>Whoops!</strong>
-                            @foreach ($errors->all() as $error)
-                                <h6>{{ $error }}</h6>
-                            @endforeach
+                        @foreach ($errors->all() as $error)
+                            <h6>{{ $error }}</h6>
+                        @endforeach
                     </div>
                 @endif
                 <div class="p-0">
@@ -71,13 +71,28 @@
                     @if (Route::has('login'))
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                             @auth
-                                <form method="POST" action="{{ route('store') }}">
-                                    @csrf
+                                @if (Auth::user()->is_appr)
+                                    <form method="POST" action="{{ route('store') }}">
+                                        @csrf
+                                        @php
+                                            $user = Auth::user();
+                                            $countdown = $countdown ? $countdown->countdown : null;
+                                        @endphp
+                                        <input name="set_id" type="text" value="{{ $user->id }}" hidden>
+                                        <input id="datecount" type="text" value="{{ $countdown }}" hidden>
+                                        <input name="signal_id" type="submit"
+                                            class="btn btn-rounded btn-success text-sm text-light-700 underline mx-"
+                                            value="Lock">
+                                        <input name="signal_id" type="submit"
+                                            class="btn btn-rounded btn-danger text-sm text-light-700 underline mx-"
+                                            value="Unlock">
+                                    </form>
+                                @else
                                     <input name="signal_id" type="submit"
-                                        class="btn btn-rounded btn-success text-sm text-light-700 underline mx-" value="Lock">
+                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-" value="Lock" disabled>
                                     <input name="signal_id" type="submit"
-                                        class="btn btn-rounded btn-danger text-sm text-light-700 underline mx-" value="Unlock">
-                                </form>
+                                        class="btn btn-rounded btn-secondary text-sm text-light-700 underline mx-" value="Unlock" disabled>
+                                @endif
                             @else
                                 <a href="{{ route('login') }}"
                                     class="btn btn-rounded btn-success text-sm text-light-700 underline">Log in</a>

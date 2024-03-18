@@ -2,9 +2,10 @@
 ///////////////////////////////////////////////////////////////
 //********************  COUNTDOWN  ***************************/
 ///////////////////////////////////////////////////////////////
+//select the date from the admin section
+var countdownElement = document.getElementById("datecount").value;
 // Set the date we're counting down to
-var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-
+var countDownDate = new Date(countdownElement).getTime();
 // Update the count down every 1 second
 var x = setInterval(function() {
 
@@ -28,5 +29,53 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("demo").innerHTML = "EXPIRED";
+    updateStatusWhenTimerOver();
   }
 }, 1000);
+
+let hasExecuted = false;
+
+function updateStatusWhenTimerOver() {
+    if (hasExecuted) {
+        return; // Stop the function execution if it has already been executed
+    }
+    // select the user details from the clients end
+    const selectedIdElement = document.getElementById('set_id');
+    if (!selectedIdElement) {
+        console.error('Element with id "set_id" not found');
+        return;
+    }
+
+    const selectedid = selectedIdElement.value;
+    if (!selectedid) {
+        console.warn('Value of selectedid is null or empty');
+        return;
+    }
+
+    // Make an AJAX request to the backend endpoint
+    fetch('/update_timer_stop', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Add CSRF token header
+            },
+            body: JSON.stringify({
+                selectedid
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update database');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message); // Log success message
+            // Perform further actions if needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    hasExecuted = true;
+}

@@ -21,6 +21,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">CLients Details</h3>
+                    <p id="demo"></p>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -38,7 +39,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Bordered Table</h3>
+                                            <h3 class="card-title">clients Table</h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
@@ -52,24 +53,59 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>{{ $user->id }}</td>
-                                                        <td>
-                                                            @if ($countdown)
-                                                                {{ $countdown->countdown }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <p id="demo"></p>
-                                                        </td>
-                                                        <td>
-                                                            @if ($user->is_appr)
-                                                                <span class="badge badge-success">Approved</span>
-                                                            @else
-                                                                <span class="badge badge-danger">Rejected</span>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($user as $user)
+                                                        @foreach ($countdown as $count)
+                                                            <tr>
+                                                                <td>#</td>
+                                                                <td>
+                                                                    {{ $count->countdown }}
+                                                                </td>
+                                                                <td>
+                                                                    <p id="demo_{{ $user->id }}"></p>
+                                                                    <script>
+                                                                        // Retrieve the countdown element for the current user
+                                                                        var countdownElement_{{ $user->id }} = "{{ $count->countdown }}";
+
+                                                                        // Set the countdown date for the current user
+                                                                        var countDownDate_{{ $user->id }} = new Date(countdownElement_{{ $user->id }}).getTime();
+
+                                                                        // Update the countdown every 1 second
+                                                                        var x_{{ $user->id }} = setInterval(function() {
+                                                                            // Get today's date and time
+                                                                            var now = new Date().getTime();
+
+                                                                            // Find the distance between now and the countdown date
+                                                                            var distance = countDownDate_{{ $user->id }} - now;
+
+                                                                            // Time calculations for days, hours, minutes and seconds
+                                                                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                                                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                                                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                                                            // Output the result in the element with id="demo_{{ $user->id }}"
+                                                                            document.getElementById("demo_{{ $user->id }}").innerHTML = days + "d " + hours + "h " +
+                                                                                minutes + "m " + seconds + "s ";
+
+                                                                            // If the countdown is over, write some text 
+                                                                            if (distance < 0) {
+                                                                                clearInterval(x_{{ $user->id }});
+                                                                                document.getElementById("demo_{{ $user->id }}").innerHTML = "EXPIRED";
+                                                                                // updateStatusWhenTimerOver();
+                                                                            }
+                                                                        }, 1000);
+                                                                    </script>
+                                                                </td>
+                                                                <td>
+                                                                    @if ($user->is_appr)
+                                                                        <span class="badge badge-success">Approved</span>
+                                                                    @else
+                                                                        <span class="badge badge-danger">Rejected</span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

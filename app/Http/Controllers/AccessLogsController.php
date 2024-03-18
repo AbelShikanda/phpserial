@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Notifications;
 use App\Models\AccessLogs;
 use App\Models\User;
+
+use DateTime;
 use DB;
 
 class AccessLogsController extends Controller
@@ -31,16 +33,15 @@ class AccessLogsController extends Controller
     {
         $user = Auth::user();
         $logs = AccessLogs::where('user_id', $user->id)
-        ->first()
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->first()
+            ->orderBy('created_at', 'desc')
+            ->get();
         $user_name = User::find($user->id)->name;
         // dd($user_name);
         return view('logs')->with([
             'logs' => $logs,
             'user_name' => $user_name,
         ]);
-
     }
 
     /**
@@ -53,7 +54,8 @@ class AccessLogsController extends Controller
     {
         $user = Auth::user();
         $comando = $request->input('signal_id');
-        // dd($comando);
+        $selectedDate = $request->input('date');
+        
         ////////////////////////////////////////
         // if ($comando == 'Lock') {
         //     $command = 'l';
@@ -78,22 +80,33 @@ class AccessLogsController extends Controller
         // dd($comand);
         try {
             DB::beginTransaction();
-            
+
             $comand = AccessLogs::create([
                 'user_id' => $user->id,
                 'action' => $comando,
             ]);
 
-            //only if the locks are touched between 00:00HRS and 06:00HRS
-            // Notifications::create([
-            //     'user_id' => $product->id,
-            //     'subject' => $product->categories_id,
-            //     'message' => $product->categories_id,
-            //     'status' => $product->categories_id,
-            // ]);
+            ////////////////////////////////////////////////////////////
+            // Convert the selected date to a DateTime object
+            $dateTime = new DateTime($selectedDate);
+
+            // Extract the time component from the DateTime object
+            $hour = $dateTime->format('H');
+            $minute = $dateTime->format('i');
+
+            // Check if the time is between midnight (00:00) and 6 AM (06:00)
+            if ($hour >= 12 && $hour < 18) {
+                Notifications::create([
+                    'user_id' => $user->id,
+                    'subject' => 'Alert',
+                    'message' => 'your door was accessed at past midnight',
+                    'status' => 1,
+                ]);
+            }
+            ///////////////////////////////////////////////////////////
 
 
-            if(!$comand){
+            if (!$comand) {
                 DB::rollBack();
 
                 return back()->with('error', 'check data');
@@ -101,8 +114,6 @@ class AccessLogsController extends Controller
 
             DB::commit();
             return redirect()->route('home')->with('message',  $comando . ' success');
-
-
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
