@@ -30,7 +30,7 @@ class DashboardController extends Controller
             // Attach the latest countdown value to the user model
             $user->latestCountdown = $countdown;
         }
-        // dd($countdown);
+        // dd($users_appr);
         return view('admin.admin.index')->with([
             'users' => $users,
             'countdown' => $countdown,
@@ -105,6 +105,9 @@ class DashboardController extends Controller
     public function show($id)
     {
         $user = User::where('id', $id)->get();
+        
+        $users_appr = Countdown::where('user_id', $id)->first();
+        
         // $countdown = Countdown::where('user_id', $id)->first()->get();
         $countdown = Countdown::where('user_id', $id)->first();
 
@@ -115,11 +118,12 @@ class DashboardController extends Controller
             // Countdown object is null, handle this case appropriately
             $countdownData = [];
         }
-        // dd($user);
+        // dd($users_appr);
         // dd($countdown);
         return view('admin.admin.show')->with([
             'user' => $user,
             'countdown' => $countdownData,
+            'users_appr', $users_appr,
         ]);
     }
 

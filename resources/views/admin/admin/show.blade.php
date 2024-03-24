@@ -97,7 +97,7 @@
                                                                     </script>
                                                                 </td>
                                                                 <td>
-                                                                    @if ($user->is_appr)
+                                                                    @if ($users_appr->is_appr)
                                                                         <span class="badge badge-success">Approved</span>
                                                                     @else
                                                                         <span class="badge badge-danger">Rejected</span>
