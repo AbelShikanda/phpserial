@@ -84,7 +84,7 @@
                                             $user = Auth::user();
                                             $countdown = $countdown ? $countdown->countdown : null;
                                         @endphp
-                                        <input name="set_id" type="text" value="{{ $user->id }}" hidden>
+                                        <input id="set_id" name="set_id" type="text" value="{{ $user->id }}" hidden>
                                         <input id="datecount" type="text" value="{{ $countdown }}" hidden>
                                         <input name="signal_id" type="submit"
                                             class="btn btn-rounded btn-success text-sm text-light-700 underline mx-"

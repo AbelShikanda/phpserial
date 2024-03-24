@@ -55,7 +55,7 @@ function updateStatusWhenTimerOver() {
 
     // Make an AJAX request to the backend endpoint
     fetch('/update_timer_stop', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Add CSRF token header
